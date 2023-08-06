@@ -9,8 +9,26 @@ import { LocationRange } from "@src/globals/location"
  * Groups the children of a node using operator precedence.
  */
 export function groupInner(tree: Node): void {
+    unwrapSingle(tree.children)
     groupOperators(tree.children)
     clearList(tree.children)
+}
+
+/**
+ * Unwraps a list of nodes: if a node is a group node
+ * that only contains one child, then the group node
+ * is removed and the child is used instead.
+ */
+export function unwrapSingle(nodes: Node[]): void {
+    for (const node of nodes) {
+        // remove the group node if it only contains one child
+        if (node.type === NodeType.GROUP && node.children.length === 1) {
+            const child = node.children[0]
+            node.type = child.type
+            node.token = child.token
+            node.children = child.children
+        }
+    }
 }
 
 /**
@@ -27,7 +45,7 @@ export function groupInner(tree: Node): void {
  */
 export function clearList(nodes: Node[]): void {
     if (nodes.length === 0) {
-        return   
+        return
     }
     if (isComma(nodes[0])) {
         throw Errors.LocationError(Errors.ERR_LIST_COMMA, nodes[0].token.location.start)
@@ -132,7 +150,7 @@ function _groupOperators(operators: Operator[], nodes: Node[]): void {
 function nodeIsOperand(node: Node): boolean {
     return !!node && (
         node.type === NodeType.FUNCTION
-        || node.type === NodeType.NUMBER 
+        || node.type === NodeType.NUMBER
         || (node.type === NodeType.SINGLE && node.token.type === TokenType.WORD)
     )
 }

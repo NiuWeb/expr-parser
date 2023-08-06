@@ -18,15 +18,7 @@ export function hydrateNode(node: Node, ctx?: Context): void {
         hydrateNode(child, ctx)
     }
 
-    // remove the group node if it only contains one child
-    if (node.type === NodeType.GROUP && node.children.length === 1) {
-        const child = node.children[0]
-        node.type = child.type
-        node.token = child.token
-        node.children = child.children
-    }
-
-    else if (node.type === NodeType.FUNCTION) { // function call
+    if (node.type === NodeType.FUNCTION) { // function call
         if (node.evaluate) { // already hydrated
             return
         }

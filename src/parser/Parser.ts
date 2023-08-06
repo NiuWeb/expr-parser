@@ -2,8 +2,9 @@ import { scan } from "@src/scanner"
 import { Context, ContextOptions } from "./Context"
 import { groupNodes } from "./group"
 import { wrapTokens } from "./wrap"
-import { clearList, groupOperators } from "./inner"
+import { clearList, groupOperators, unwrapSingle } from "./inner"
 import { hydrateNode } from "./hydrate"
+import { Expression } from "./Expression"
 /**
  * An expression parser transform mathematical expressions from
  * strings into a tree of nodes that can be evaluated.
@@ -41,6 +42,7 @@ export class Parser {
         const tokens = scan(expression)
         const tree = groupNodes(wrapTokens(tokens))
 
+        unwrapSingle(tree)
         groupOperators(tree)
         clearList(tree)
 
@@ -48,6 +50,6 @@ export class Parser {
             hydrateNode(node, this.context)
         }
 
-        return tree
+        return new Expression(tree, this.context)
     }
 }
