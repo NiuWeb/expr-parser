@@ -1,6 +1,6 @@
 import { Errors } from "@src/globals/errors"
 import { TokenType } from "@src/scanner"
-import { Context, Fn } from "./context"
+import { Context, Fn } from "./Context"
 import { Node, NodeType } from "./node"
 import { OperatorsMap } from "@src/operators/list"
 

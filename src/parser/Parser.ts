@@ -1,5 +1,5 @@
 import { scan } from "@src/scanner"
-import { Context, ContextOptions } from "./context"
+import { Context, ContextOptions } from "./Context"
 import { groupNodes } from "./group"
 import { wrapTokens } from "./wrap"
 import { clearList, groupOperators } from "./inner"

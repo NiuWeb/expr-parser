@@ -1,5 +1,5 @@
 import { Errors } from "@src/globals/errors"
-import { Context } from "./context"
+import { Context } from "./Context"
 import { Node } from "./node"
 import { stringFromNodes } from "./string"
 
