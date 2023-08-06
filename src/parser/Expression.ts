@@ -15,6 +15,18 @@ export class Expression {
     }
 
     /**
+     * Evaluates all the expression nodes
+     * @returns an array of results of each node
+     */
+    public evaluateAll(): number[] {
+        const result: number[] = []
+        for (let i = 0; i < this.length; i++) {
+            result.push(this.evaluate(i))
+        }
+        return result
+    }
+
+    /**
      * Evaluates the expression node at the given index
      */
     public evaluate(index: number): number {
