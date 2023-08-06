@@ -1,6 +1,7 @@
 import { TokenType } from "@src/scanner"
 import { Node, NodeType } from "./node"
 import { Errors } from "@src/globals/errors"
+import { groupInner } from "./inner"
 
 /**
  * Groups a list of nodes into a tree, based on the
@@ -56,6 +57,8 @@ export function groupNodes(nodes: Node[]): Node[] {
                 newNode.token = nodes[openIndex - 1].token
                 removeFrom = openIndex - 1
             }
+
+            groupInner(newNode)
 
             nodes.splice(removeFrom, i - removeFrom + 1, newNode)
             i = removeFrom

@@ -8,18 +8,48 @@ describe("Convert operators to regular expression", () => {
 
     test("Single-symbol operators", () => {
         const expr = getOperatorsRegex([
-            { symbol: "+" },
-            { symbol: "-" },
-            { symbol: "*" },
-            { symbol: "/" },
+            {
+                symbol: "+",
+                left: true,
+                right: true,
+                evaluate: ([a, b]) => a + b,
+            },
+            {
+                symbol: "-",
+                left: true,
+                right: true,
+                evaluate: ([a, b]) => a - b,
+            },
+            {
+                symbol: "*",
+                left: true,
+                right: true,
+                evaluate: ([a, b]) => a * b,
+            },
+            {
+                symbol: "/",
+                left: true,
+                right: true,
+                evaluate: ([a, b]) => a / b,
+            },
         ])
         expect("+-*/".match(expr)).toEqual(["+", "-", "*", "/"])
     })
 
     test("Multi-symbol operators", () => {
         const expr = getOperatorsRegex([
-            { symbol: "&&" },
-            { symbol: "||" },
+            {
+                symbol: "&&",
+                left: true,
+                right: true,
+                evaluate: ([a, b]) => a && b,
+            },
+            {
+                symbol: "||",
+                left: true,
+                right: true,
+                evaluate: ([a, b]) => a || b,
+            },
         ])
         expect("&&||&|".match(expr)).toEqual(["&&", "||"])
     })

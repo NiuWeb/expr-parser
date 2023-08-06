@@ -44,13 +44,17 @@ export const Operators: readonly Operator[][] = [
         {
             symbol: "+",
             left: true,
+            addLeft: true,
             right: true,
+            addRight: true,
             evaluate: ([a, b]) => a + b,
         },
         {
             symbol: "-",
             left: true,
+            addLeft: true,
             right: true,
+            addRight: true,
             evaluate: ([a, b]) => a - b,
         },
     ],
@@ -102,3 +106,17 @@ export const Operators: readonly Operator[][] = [
     ]
 
 ]
+
+
+/**
+ * Map containing all operators by their symbol
+ */
+export const OperatorsMap = (() => {
+    const map = new Map<string, Operator>()
+    for (const operators of Operators) {
+        for (const op of operators) {
+            map.set(op.symbol, op)
+        }
+    }
+    return map
+})()
