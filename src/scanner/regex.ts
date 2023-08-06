@@ -1,4 +1,4 @@
-import { OperatorsRegex } from "./operator/regex"
+import { OperatorsRegex } from "../operators/regex"
 import { TokenExpr, TokenType } from "./token"
 
 /** List of regular expressions to scan a token */
