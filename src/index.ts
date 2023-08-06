@@ -1,3 +1,3 @@
 export function doNothing() {
-    console.log('do nothing');
+    console.log("do nothing")
 }
