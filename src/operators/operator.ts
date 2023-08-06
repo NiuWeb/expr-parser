@@ -1,3 +1,5 @@
+import { Location } from "@src/globals/location"
+
 export interface Operator {
     symbol: string
     left: boolean
@@ -12,7 +14,7 @@ export interface Operator {
      * if there is no numeric token to the right of the operator.
      */
     addRight?: boolean
-    evaluate(values: number[]): number
+    evaluate(values: number[], location: Location): number
 }
 
 /**

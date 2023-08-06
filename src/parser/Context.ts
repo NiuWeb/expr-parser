@@ -1,3 +1,5 @@
+import { Location } from "@src/globals/location"
+
 /**
  * A function that can be called in the expression.
  */
@@ -9,7 +11,7 @@ export interface Fn {
      * will accept a minimum and maximum number of arguments.
      */
     arguments?: number | [min: number, max: number]
-    evaluate(values: number[]): number
+    evaluate(values: number[], location: Location): number
 }
 
 /**

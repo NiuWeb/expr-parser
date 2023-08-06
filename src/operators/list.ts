@@ -1,4 +1,5 @@
 import { Operator } from "./operator"
+import { Errors } from "@src/globals/errors"
 
 /**
  * List of all operators with their symbols and precedence
@@ -17,7 +18,13 @@ export const Operators: readonly Operator[][] = [
             symbol: "^",
             left: true,
             right: true,
-            evaluate: ([a, b]) => Math.pow(a, b),
+            evaluate: ([a, b], loc) => {
+                const value = Math.pow(a, b)
+                if (!Number.isFinite(value)) {
+                    throw Errors.LocationError(Errors.ERR_MATH, loc)
+                }
+                return value
+            },
         },
     ],
     [
@@ -31,13 +38,23 @@ export const Operators: readonly Operator[][] = [
             symbol: "/",
             left: true,
             right: true,
-            evaluate: ([a, b]) => a / b,
+            evaluate: ([a, b], loc) => {
+                if (b === 0) {
+                    throw Errors.LocationError(Errors.ERR_DIVISION_BY_ZERO, loc)
+                }
+                return a / b
+            },
         },
         {
             symbol: "%",
             left: true,
             right: true,
-            evaluate: ([a, b]) => a % b,
+            evaluate: ([a, b], loc) => {
+                if (b === 0) {
+                    throw Errors.LocationError(Errors.ERR_DIVISION_BY_ZERO, loc)
+                }
+                return a % b
+            },
         }
     ],
     [

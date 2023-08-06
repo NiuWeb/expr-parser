@@ -60,7 +60,7 @@ export function hydrateNode(node: Node, ctx?: Context): void {
             }
         }
 
-        node.evaluate = () => fn.evaluate(getters.map(getter => getter()))
+        node.evaluate = () => fn.evaluate(getters.map(getter => getter()), node.token.location.start)
     }
 
     else if (node.type === NodeType.SINGLE && node.token.type === TokenType.WORD) { // variables
