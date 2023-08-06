@@ -1,5 +1,8 @@
 export interface Operator {
-    readonly symbol: string
+    symbol: string
+    left: boolean
+    right: boolean
+    evaluate(values: number[]): number
 }
 
 /**

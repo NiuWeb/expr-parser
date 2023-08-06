@@ -5,30 +5,100 @@ import { Operator } from "./operator"
  */
 export const Operators: readonly Operator[][] = [
     [
-        { symbol: "!" },
+        {
+            symbol: "!",
+            left: false,
+            right: true,
+            evaluate: ([, a]) => !a ? 1 : 0,
+        },
     ],
     [
-        { symbol: "^" },
+        {
+            symbol: "^",
+            left: true,
+            right: true,
+            evaluate: ([a, b]) => Math.pow(a, b),
+        },
     ],
     [
-        { symbol: "*" },
-        { symbol: "/" },
-        { symbol: "%" }
+        {
+            symbol: "*",
+            left: true,
+            right: true,
+            evaluate: ([a, b]) => a * b,
+        },
+        {
+            symbol: "/",
+            left: true,
+            right: true,
+            evaluate: ([a, b]) => a / b,
+        },
+        {
+            symbol: "%",
+            left: true,
+            right: true,
+            evaluate: ([a, b]) => a % b,
+        }
     ],
     [
-        { symbol: "+" },
-        { symbol: "-" },
+        {
+            symbol: "+",
+            left: true,
+            right: true,
+            evaluate: ([a, b]) => a + b,
+        },
+        {
+            symbol: "-",
+            left: true,
+            right: true,
+            evaluate: ([a, b]) => a - b,
+        },
     ],
     [
-        { symbol: "<" },
-        { symbol: ">" },
-        { symbol: "<=" },
-        { symbol: ">=" },
-        { symbol: "=" },
+        {
+            symbol: "<",
+            left: true,
+            right: true,
+            evaluate: ([a, b]) => a < b ? 1 : 0,
+        },
+        {
+            symbol: ">",
+            left: true,
+            right: true,
+            evaluate: ([a, b]) => a > b ? 1 : 0,
+        },
+        {
+            symbol: "<=",
+            left: true,
+            right: true,
+            evaluate: ([a, b]) => a <= b ? 1 : 0,
+        },
+        {
+            symbol: ">=",
+            left: true,
+            right: true,
+            evaluate: ([a, b]) => a >= b ? 1 : 0,
+        },
+        {
+            symbol: "=",
+            left: true,
+            right: true,
+            evaluate: ([a, b]) => a === b ? 1 : 0,
+        },
     ],
     [
-        { symbol: "&&" },
-        { symbol: "||" },
+        {
+            symbol: "&&",
+            left: true,
+            right: true,
+            evaluate: ([a, b]) => a && b ? 1 : 0,
+        },
+        {
+            symbol: "||",
+            left: true,
+            right: true,
+            evaluate: ([a, b]) => a || b ? 1 : 0,
+        },
     ]
 
 ]
