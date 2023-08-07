@@ -36,6 +36,9 @@ export class ParserContext {
         this.vectors.set(++this.lastId, values)
         return this.lastId
     }
+    public setVector(id: number, values: number[]) {
+        this.vectors.set(id, values)
+    }
     public getVector(id: number, [line, col]: [number, number]) {
         const value = this.vectors.get(id)
         if (value === undefined) {

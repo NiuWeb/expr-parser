@@ -6,7 +6,7 @@ export const fnVectors = (context: ParserContext): FnMap => ({
             return context.newVector(values)
         },
     },
-    scalar: {
+    "vector.scalar": {
         arguments: 2,
         evaluate: ([scalar, vectorId], loc) => {
             const vector = context.getVector(vectorId, loc)
@@ -15,7 +15,7 @@ export const fnVectors = (context: ParserContext): FnMap => ({
             return vectorId
         }
     },
-    add: {
+    "vector.add": {
         arguments: 2,
         evaluate: ([vectorId1, vectorId2], loc) => {
             const vector1 = context.getVector(vectorId1, loc)
@@ -27,14 +27,14 @@ export const fnVectors = (context: ParserContext): FnMap => ({
             return vectorId1
         }
     },
-    magnitude: {
+    "vector.magnitude": {
         arguments: 1,
         evaluate: ([vectorId], loc) => {
             const vector = context.getVector(vectorId, loc)
             return Math.sqrt(vector.reduce((acc, value) => acc + value * value, 0))
         }
     },
-    dot: {
+    "vector.dot": {
         arguments: 2,
         evaluate: ([vectorId1, vectorId2], loc) => {
             const vector1 = context.getVector(vectorId1, loc)
@@ -45,7 +45,7 @@ export const fnVectors = (context: ParserContext): FnMap => ({
             return vector1.reduce((acc, value, i) => acc + value * vector2[i], 0)
         }
     },
-    vectprint: {
+    "vector.print": {
         arguments: 1,
         evaluate: ([vectorId], loc) => {
             const vector = context.getVector(vectorId, loc)
@@ -53,14 +53,14 @@ export const fnVectors = (context: ParserContext): FnMap => ({
             return vectorId
         }
     },
-    vectclear: {
+    "vector.clear": {
         arguments: 1,
         evaluate: ([vectorId]) => {
             context.deleteVector(vectorId)
             return vectorId
         }
     },
-    vectjoin: {
+    "vector.join": {
         arguments: [1, Infinity],
         evaluate: (indexes, loc) => {
             const newVec: number[] = []
@@ -71,39 +71,47 @@ export const fnVectors = (context: ParserContext): FnMap => ({
             return context.newVector(newVec)
         }
     },
-    vectsum: {
+    "vector.sum": {
         arguments: 1,
         evaluate: ([vectorId], loc) => {
             const vector = context.getVector(vectorId, loc)
             return vector.reduce((acc, value) => acc + value, 0)
         }
     },
-    vectproduct: {
+    "vector.product": {
         arguments: 1,
         evaluate: ([vectorId], loc) => {
             const vector = context.getVector(vectorId, loc)
             return vector.reduce((acc, value) => acc * value, 1)
         }
     },
-    vectmin: {
+    "vector.min": {
         arguments: 1,
         evaluate: ([vectorId], loc) => {
             const vector = context.getVector(vectorId, loc)
             return Math.min(...vector)
         }
     },
-    vectmax: {
+    "vector.max": {
         arguments: 1,
         evaluate: ([vectorId], loc) => {
             const vector = context.getVector(vectorId, loc)
             return Math.max(...vector)
         }
     },
-    vectlen: {
+    "vector.len": {
         arguments: 1,
         evaluate: ([vectorId], loc) => {
             const vector = context.getVector(vectorId, loc)
             return vector.length
+        }
+    },
+    "vector.set": {
+        arguments: 2,
+        evaluate: ([vectorId1, vectorId2], loc) => {
+            const vector = context.getVector(vectorId2, loc)
+            context.setVector(vectorId1, vector)
+            return vectorId1
         }
     }
 })
