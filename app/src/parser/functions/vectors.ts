@@ -45,7 +45,7 @@ export const fnVectors = (context: ParserContext): FnMap => ({
             return vector1.reduce((acc, value, i) => acc + value * vector2[i], 0)
         }
     },
-    printvector: {
+    vectprint: {
         arguments: 1,
         evaluate: ([vectorId], loc) => {
             const vector = context.getVector(vectorId, loc)
@@ -53,11 +53,57 @@ export const fnVectors = (context: ParserContext): FnMap => ({
             return vectorId
         }
     },
-    clearvector: {
+    vectclear: {
         arguments: 1,
         evaluate: ([vectorId]) => {
             context.deleteVector(vectorId)
             return vectorId
         }
     },
+    vectjoin: {
+        arguments: [1, Infinity],
+        evaluate: (indexes, loc) => {
+            const newVec: number[] = []
+            for (const index of indexes) {
+                const vector = context.getVector(index, loc)
+                newVec.push(...vector)
+            }
+            return context.newVector(newVec)
+        }
+    },
+    vectsum: {
+        arguments: 1,
+        evaluate: ([vectorId], loc) => {
+            const vector = context.getVector(vectorId, loc)
+            return vector.reduce((acc, value) => acc + value, 0)
+        }
+    },
+    vectproduct: {
+        arguments: 1,
+        evaluate: ([vectorId], loc) => {
+            const vector = context.getVector(vectorId, loc)
+            return vector.reduce((acc, value) => acc * value, 1)
+        }
+    },
+    vectmin: {
+        arguments: 1,
+        evaluate: ([vectorId], loc) => {
+            const vector = context.getVector(vectorId, loc)
+            return Math.min(...vector)
+        }
+    },
+    vectmax: {
+        arguments: 1,
+        evaluate: ([vectorId], loc) => {
+            const vector = context.getVector(vectorId, loc)
+            return Math.max(...vector)
+        }
+    },
+    vectlen: {
+        arguments: 1,
+        evaluate: ([vectorId], loc) => {
+            const vector = context.getVector(vectorId, loc)
+            return vector.length
+        }
+    }
 })

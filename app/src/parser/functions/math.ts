@@ -6,6 +6,12 @@ export const fnMath = (): FnMap => ({
             return Math.sqrt(value)
         }
     },
+    pow: {
+        arguments: 2,
+        evaluate: ([base, exponent]) => {
+            return Math.pow(base, exponent)
+        }
+    },
     ln: {
         arguments: 1,
         evaluate: ([value]) => {
@@ -102,4 +108,28 @@ export const fnMath = (): FnMap => ({
             return Math.atan2(y, x)
         }
     },
+    min: {
+        arguments: [1, Infinity],
+        evaluate: (values) => {
+            return Math.min(...values)
+        }
+    },
+    max: {
+        arguments: [1, Infinity],
+        evaluate: (values) => {
+            return Math.max(...values)
+        }
+    },
+    sum: {
+        arguments: [1, Infinity],
+        evaluate: (values) => {
+            return values.reduce((acc, value) => acc + value, 0)
+        }
+    },
+    product: {
+        arguments: [1, Infinity],
+        evaluate: (values) => {
+            return values.reduce((acc, value) => acc * value, 1)
+        }
+    }
 })
