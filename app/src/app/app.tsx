@@ -17,7 +17,7 @@ export function App() {
       </div>
       <Results />
       <Logs />
-      <div className="col-span-4">
+      <div className="col-span-2">
         <Vectors />
       </div>
     </div>
