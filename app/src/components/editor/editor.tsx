@@ -1,14 +1,14 @@
-import { useState } from "react"
+import "./language"
 import { useApp } from "../../app/context"
+import { MonacoEditor } from "./monaco"
 
 export function Editor() {
-  const [value, setValue] = useState("")
   const { parser, update } = useApp()
 
   function run() {
     parser.clear()
     try {
-      parser.run(value)
+      parser.run(parser.value)
     } catch (e) {
       parser.error = String(e).valueOf()
     }
@@ -17,10 +17,14 @@ export function Editor() {
   }
 
   return <div className="editor flex flex-col">
-    <textarea
-      className="w-full min-h-[320px]"
-      value={value}
-      onChange={ev => setValue(ev.target.value)} />
+    <div className="w-full h-[320px]">
+      <MonacoEditor
+        theme="vs"
+        path="editor/expr-parser"
+        language="expr-parser"
+        value={parser.value}
+        onChange={v => parser.value = v} />
+    </div>
     <button
       className=" bg-green-500 hover:bg-green-600 active:bg-green-700"
       onClick={run}>

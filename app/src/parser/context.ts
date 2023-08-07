@@ -1,12 +1,23 @@
 import { ContextOptions, Location, Parser } from "@bygdle/expr-parser"
-import { fnVectors } from "./functions/vectors"
-import { fnGeneral } from "./functions/general"
-import { fnMath } from "./functions/math"
-import { fnTime } from "./functions/time"
 import { FnMapDoc } from "./functions/type"
+import { functions } from "./functions"
 
 type Log = [Location, string]
 type Result = [Location, number]
+
+const defaultCode = `(1 + sqrt(5))/2,
+
+1 + 1 = 2,
+
+1/SQRT(2) - SQRT(2)/2,
+
+VECTOR.DOT(
+  VECTOR(1, 2, 3),
+  VECTOR.JOIN(
+    VECTOR(3),
+    VECTOR.SCALAR(0.5, VECTOR(1, 2))
+  )
+)`
 
 export class ParserContext {
     private readonly context: ContextOptions & { functions: FnMapDoc }
@@ -16,18 +27,14 @@ export class ParserContext {
     public logs: Log[] = []
     public results: Result[] = []
     public error?: string
+    public value = defaultCode
     constructor() {
         this.context = {
             variables: {
                 pi: Math.PI,
                 e: Math.E,
             },
-            functions: {
-                ...fnTime(),
-                ...fnMath(),
-                ...fnGeneral(this),
-                ...fnVectors(this)
-            }
+            functions: functions(this),
         }
         this.parser = new Parser(this.context)
     }
