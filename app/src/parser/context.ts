@@ -1,20 +1,22 @@
-import { Location, Parser } from "@bygdle/expr-parser"
+import { ContextOptions, Location, Parser } from "@bygdle/expr-parser"
 import { fnVectors } from "./functions/vectors"
 import { fnGeneral } from "./functions/general"
 import { fnMath } from "./functions/math"
 import { fnTime } from "./functions/time"
+import { FnMapDoc } from "./functions/type"
 
 type Log = [Location, string]
 type Result = [Location, number]
 
 export class ParserContext {
+    private readonly context: ContextOptions & { functions: FnMapDoc }
     public readonly parser: Parser
     private vectors = new Map<number, number[]>()
     private lastId = 0
     public logs: Log[] = []
     public results: Result[] = []
     constructor() {
-        this.parser = new Parser({
+        this.context = {
             variables: {
                 pi: Math.PI,
                 e: Math.E,
@@ -25,7 +27,8 @@ export class ParserContext {
                 ...fnGeneral(this),
                 ...fnVectors(this)
             }
-        })
+        }
+        this.parser = new Parser(this.context)
     }
 
     public getVectors() {
@@ -46,6 +49,11 @@ export class ParserContext {
         }
         return value
     }
+
+    public getFunctions() {
+        return Object.entries(this.context.functions || {})
+    }
+
     public deleteVector(id: number) {
         this.vectors.delete(id)
     }

@@ -4,6 +4,7 @@ import { Editor } from "../components/editor/editor"
 import { Results } from "../components/results/results"
 import { Vectors } from "../components/vectors/vectors"
 import { Logs } from "../components/prints/results"
+import { Docs } from "../components/docs/docs"
 
 const parserContext = new ParserContext()
 
@@ -19,6 +20,9 @@ export function App() {
       <Logs />
       <div className="col-span-2">
         <Vectors />
+      </div>
+      <div className="col-span-2">
+        <Docs />
       </div>
     </div>
   </AppContext.Provider>
