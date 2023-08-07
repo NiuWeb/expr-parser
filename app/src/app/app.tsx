@@ -11,9 +11,15 @@ export function App() {
   const context = useAppProvider(parserContext)
 
   return <AppContext.Provider value={context}>
-    <Editor />
-    <Results />
-    <Vectors />
-    <Logs />
+    <div id="app" className="grid grid-cols-4 divide-x divide-y divide-gray-300">
+      <div className="col-span-2">
+        <Editor />
+      </div>
+      <Results />
+      <Logs />
+      <div className="col-span-4">
+        <Vectors />
+      </div>
+    </div>
   </AppContext.Provider>
 }

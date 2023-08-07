@@ -11,10 +11,15 @@ export function Editor() {
     update()
   }
 
-  return <div className="editor">
+  return <div className="editor flex flex-col">
     <textarea
+      className="w-full min-h-[320px]"
       value={value}
       onChange={ev => setValue(ev.target.value)} />
-    <button onClick={run}>Run</button>
+    <button
+      className=" bg-green-500 hover:bg-green-600 active:bg-green-700"
+      onClick={run}>
+      Run
+    </button>
   </div>
 }

@@ -113,5 +113,12 @@ export const fnVectors = (context: ParserContext): FnMap => ({
             context.setVector(vectorId1, vector)
             return vectorId1
         }
+    },
+    "vector.create": {
+        arguments: 2,
+        evaluate: ([value, size]) => {
+            const vector = new Array<number>(size).fill(value)
+            return context.newVector(vector)
+        }
     }
 })
