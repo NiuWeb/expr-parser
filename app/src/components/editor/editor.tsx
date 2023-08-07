@@ -7,7 +7,12 @@ export function Editor() {
 
   function run() {
     parser.clear()
-    parser.run(value)
+    try {
+      parser.run(value)
+    } catch (e) {
+      parser.error = String(e).valueOf()
+    }
+
     update()
   }
 

@@ -15,6 +15,7 @@ export class ParserContext {
     private lastId = 0
     public logs: Log[] = []
     public results: Result[] = []
+    public error?: string
     constructor() {
         this.context = {
             variables: {
@@ -67,6 +68,7 @@ export class ParserContext {
         this.results = []
         this.vectors.clear()
         this.lastId = 0
+        this.error = undefined
     }
 
     public run(expr: string) {
