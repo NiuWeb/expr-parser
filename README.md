@@ -28,6 +28,6 @@ const parser = new Parser({
 const expr = parser.parse("log(pi) + 1")
 console.log(expr.evaluate())
 
-parset.setVariable("pi", 3)
+parset.setVar("pi", 3)
 console.log(expr.evaluate())
 ```
