@@ -2,6 +2,7 @@ import { Errors } from "@src/globals/errors"
 import { Context } from "./Context"
 import { Node } from "./node"
 import { stringFromNodes } from "./string"
+import { Location } from "@src/globals/location"
 
 /**
  * An expression class is just a container for a list
@@ -12,6 +13,13 @@ export class Expression {
 
     public get length() {
         return this.nodes.length
+    }
+
+    /**
+     * Gets the start location of the expression node at the given index
+     */
+    public location(i: number): Location {
+        return this.nodes[i].token.location.start
     }
 
     /**
