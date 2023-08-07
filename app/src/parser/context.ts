@@ -2,6 +2,7 @@ import { Location, Parser } from "@bygdle/expr-parser"
 import { fnVectors } from "./functions/vectors"
 import { fnGeneral } from "./functions/general"
 import { fnMath } from "./functions/math"
+import { fnTime } from "./functions/time"
 
 type Log = [Location, string]
 type Result = [Location, number]
@@ -19,6 +20,7 @@ export class ParserContext {
                 e: Math.E,
             },
             functions: {
+                ...fnTime(),
                 ...fnMath(),
                 ...fnGeneral(this),
                 ...fnVectors(this)
