@@ -9,28 +9,28 @@ describe("Convert operators to regular expression", () => {
     test("Single-symbol operators", () => {
         const expr = getOperatorsRegex([
             {
-                symbol: "+",
+                name: "+",
                 left: true,
                 right: true,
-                evaluate: ([a, b]) => a + b,
+                evaluate: ({ values: [a, b] }) => a + b,
             },
             {
-                symbol: "-",
+                name: "-",
                 left: true,
                 right: true,
-                evaluate: ([a, b]) => a - b,
+                evaluate: ({ values: [a, b] }) => a - b,
             },
             {
-                symbol: "*",
+                name: "*",
                 left: true,
                 right: true,
-                evaluate: ([a, b]) => a * b,
+                evaluate: ({ values: [a, b] }) => a * b,
             },
             {
-                symbol: "/",
+                name: "/",
                 left: true,
                 right: true,
-                evaluate: ([a, b]) => a / b,
+                evaluate: ({ values: [a, b] }) => a / b,
             },
         ])
         expect("+-*/".match(expr)).toEqual(["+", "-", "*", "/"])
@@ -39,16 +39,16 @@ describe("Convert operators to regular expression", () => {
     test("Multi-symbol operators", () => {
         const expr = getOperatorsRegex([
             {
-                symbol: "&&",
+                name: "&&",
                 left: true,
                 right: true,
-                evaluate: ([a, b]) => a && b,
+                evaluate: ({ values: [a, b] }) => a && b,
             },
             {
-                symbol: "||",
+                name: "||",
                 left: true,
                 right: true,
-                evaluate: ([a, b]) => a || b,
+                evaluate: ({ values: [a, b] }) => a || b,
             },
         ])
         expect("&&||&|".match(expr)).toEqual(["&&", "||"])

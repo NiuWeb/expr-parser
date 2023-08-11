@@ -1,8 +1,10 @@
 import { Errors } from "@src/globals/errors"
 import { TokenType } from "@src/scanner"
-import { Context, Fn } from "./Context"
+import { Context } from "./Context"
 import { Node, NodeType } from "./node"
 import { OperatorsMap } from "@src/operators/list"
+import { Fn } from "@src/functions/functions"
+import { validateArgcount } from "@src/functions/arguments"
 
 /**
  * Hydrates a node, that is, it adds the `evaluate` function
@@ -40,27 +42,38 @@ export function hydrateNode(node: Node, ctx?: Context): void {
             throw Errors.LocationError(Errors.ERR_FUNCTION_UNKNOWN(node.token.value), node.token.location.start)
         }
 
-        // evaluate the argument nodes
-        const getters = node.children.map(child => {
-            if (!child.evaluate) {
-                throw Errors.LocationError(Errors.ERR_FUNCTION_ARGUMENT, child.token.location.start)
-            }
-            return child.evaluate
-        })
+        // get the argument nodes
+        const getters = node.children.map(child => child.evaluate)
 
         const argCount = fn.arguments
         if (typeof argCount === "number" && getters.length !== argCount) {
             throw Errors.LocationError(Errors.ERR_FUNCTION_ARGUMENT_COUNT(node.token.value, argCount, getters.length), node.token.location.start)
         }
-        if (Array.isArray(argCount)) {
-            const min = Math.min(...argCount)
-            const max = Math.max(...argCount)
-            if (getters.length < min || getters.length > max) {
-                throw Errors.LocationError(Errors.ERR_FUNCTION_ARGUMENT_COUNT(node.token.value, min + "-" + max, getters.length), node.token.location.start)
+
+        try {
+            validateArgcount(fn, getters.length)
+        } catch (e) {
+            if (e instanceof Error) {
+                throw Errors.LocationError(e.message, node.token.location.start)
             }
+            throw e
         }
 
-        node.evaluate = () => fn.evaluate(getters.map(getter => getter()), node.token.location.start)
+        const location = node.token.location.start
+        const expressions = node.children
+        node.evaluate = () => {
+            const values = node.children.map((child, i) => {
+                const arg = fn.arguments?.[i]
+                if (arg && typeof arg !== "string" && arg.expression) {
+                    return child.evaluate?.() || 0
+                }
+                if (!child.evaluate) {
+                    throw Errors.LocationError(Errors.ERR_FUNCTION_ARGUMENT, child.token.location.start)
+                }
+                return child.evaluate()
+            })
+            return fn.evaluate({ values, expressions, location })
+        }
     }
 
     else if (node.type === NodeType.SINGLE && node.token.type === TokenType.WORD) { // variables

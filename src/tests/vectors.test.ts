@@ -10,35 +10,56 @@ test("vector operations with functions", () => {
         },
         functions: {
             vector: {
-                evaluate(values) {
+                name: "vector",
+                evaluate({ values }) {
                     const id = vectId++
                     vectors.set(id, values)
                     return id
                 }
             },
             scalar: {
-                arguments: 2,
-                evaluate([r, V], loc) {
+                name: "scalar",
+                arguments: [
+                    {
+                        name: "scalar",
+                        description: "The scalar to multiply the vector with"
+                    },
+                    {
+                        name: "vector",
+                        description: "The vector to multiply"
+                    }
+                ],
+                evaluate({ values: [r, V], location }) {
                     const vec = vectors.get(V)!
                     if (!vec) {
-                        throw LocationError("Vector not found", loc)
+                        throw LocationError("Vector not found", location)
                     }
                     vec.forEach((v, i) => vec[i] = v * r)
                     return V
                 }
             },
             dot: {
-                arguments: 2,
-                evaluate([a, b], loc) {
+                name: "dot",
+                arguments: [
+                    {
+                        name: "vectorA",
+                        description: "The first vector"
+                    },
+                    {
+                        name: "vectorB",
+                        description: "The second vector"
+                    }
+                ],
+                evaluate({ values: [a, b], location }) {
                     const vecA = vectors.get(a)!
                     const vecB = vectors.get(b)!
 
                     if (!vecA || !vecB) {
-                        throw LocationError("Vector not found", loc)
+                        throw LocationError("Vector not found", location)
                     }
 
                     if (vecA.length !== vecB.length) {
-                        throw LocationError("Vector length mismatch", loc)
+                        throw LocationError("Vector length mismatch", location)
                     }
 
                     let sum = 0
@@ -50,8 +71,18 @@ test("vector operations with functions", () => {
                 }
             },
             lookto: {
-                arguments: 2,
-                evaluate([dist, dir]) {
+                name: "lookto",
+                arguments: [
+                    {
+                        name: "distance",
+                        description: "The distance to look to"
+                    },
+                    {
+                        name: "direction",
+                        description: "The direction to look to, in radians"
+                    }
+                ],
+                evaluate({ values: [dist, dir] }) {
                     const id = vectId++
                     const x = Math.cos(dir) * dist
                     const y = Math.sin(dir) * dist
@@ -60,8 +91,14 @@ test("vector operations with functions", () => {
                 }
             },
             degtorad: {
-                arguments: 1,
-                evaluate([deg]) {
+                name: "degtorad",
+                arguments: [
+                    {
+                        name: "deg",
+                        description: "The degrees to convert to radians"
+                    }
+                ],
+                evaluate({ values: [deg] }) {
                     return deg * Math.PI / 180
                 }
             }

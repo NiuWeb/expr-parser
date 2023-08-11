@@ -98,7 +98,7 @@ function _groupOperators(operators: Operator[], nodes: Node[]): void {
 
         // if the node is an operator, check if it is in the list of operators
         for (const op of operators) {
-            if (op.symbol !== node.token.value) {
+            if (op.name !== node.token.value) {
                 continue
             }
 
@@ -114,7 +114,7 @@ function _groupOperators(operators: Operator[], nodes: Node[]): void {
                     leftNode = createZeroNode(node.token.location)
                     removeFrom = i
                 } else { // otherwise, throw an error
-                    throw Errors.LocationError(Errors.ERR_OPERATOR_UNEXPECTED_LEFT(op.symbol), node.token.location.start)
+                    throw Errors.LocationError(Errors.ERR_OPERATOR_UNEXPECTED_LEFT(op.name), node.token.location.start)
                 }
             }
 
@@ -123,7 +123,7 @@ function _groupOperators(operators: Operator[], nodes: Node[]): void {
                     rightNode = createZeroNode(node.token.location)
                     removeTo = i
                 } else { // otherwise, throw an error
-                    throw Errors.LocationError(Errors.ERR_OPERATOR_UNEXPECTED_RIGHT(op.symbol), node.token.location.start)
+                    throw Errors.LocationError(Errors.ERR_OPERATOR_UNEXPECTED_RIGHT(op.name), node.token.location.start)
                 }
             }
 

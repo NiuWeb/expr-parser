@@ -1,7 +1,6 @@
-import { Location } from "@src/globals/location"
+import { Fn } from "@src/functions/functions"
 
-export interface Operator {
-    symbol: string
+export interface Operator extends Fn {
     left: boolean
     /**
      * if true, a "zero" token will be added to the left of the operator
@@ -14,7 +13,6 @@ export interface Operator {
      * if there is no numeric token to the right of the operator.
      */
     addRight?: boolean
-    evaluate(values: number[], location: Location): number
 }
 
 /**
@@ -22,7 +20,7 @@ export interface Operator {
  */
 export function getOperatorsRegex(operators: readonly Operator[]): RegExp {
     const symbols = operators
-        .map(op => op.symbol.replace(/(.)/g, "\\$1"))
+        .map(op => op.name.replace(/(.)/g, "\\$1"))
         .join("|")
     return new RegExp(`(?:${symbols})`, "ig")
 }

@@ -1,18 +1,4 @@
-import { Location } from "@src/globals/location"
-
-/**
- * A function that can be called in the expression.
- */
-export interface Fn {
-    /**
-     * Argument count definition. If a number is provided,
-     * then the function will only accept that number of
-     * arguments. If an array is provided, then the function
-     * will accept a minimum and maximum number of arguments.
-     */
-    arguments?: number | [min: number, max: number]
-    evaluate(values: number[], location: Location): number
-}
+import { Fn } from "@src/functions/functions"
 
 /**
  * A map of functions for the expression.

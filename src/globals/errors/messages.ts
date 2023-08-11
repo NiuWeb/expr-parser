@@ -4,6 +4,7 @@ export const ERR_OPERATOR_UNEXPECTED_RIGHT = (value: string) => "unexpected valu
 export const ERR_FUNCTION_UNKNOWN = (value: string) => "unknown function: " + value
 export const ERR_FUNCTION_ARGUMENT_COUNT = (fn: string, expected: number | string, actual: number) => `function ${fn} expected ${expected} arguments, got ${actual}`
 export const ERR_VARIABLE_UNKNOWN = (value: string) => "unknown variable: " + value
+export const ERR_FUNCTION_INVALID_OPTIONAL = (fn: string) => "invalid optional argument definition for function " + fn
 export const ERR_FUNCTION_CONTEXT = "cannot parse a function without context"
 export const ERR_VARIABLE_CONTEXT = "cannot parse a variable without context"
 export const ERR_LIST_COMMA = "unexpected comma"

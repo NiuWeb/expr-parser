@@ -7,21 +7,21 @@ import { Errors } from "@src/globals/errors"
 export const Operators: readonly Operator[][] = [
     [
         {
-            symbol: "!",
+            name: "!",
             left: false,
             right: true,
-            evaluate: ([, a]) => !a ? 1 : 0,
+            evaluate: ({ values: [a] }) => !a ? 1 : 0,
         },
     ],
     [
         {
-            symbol: "^",
+            name: "^",
             left: true,
             right: true,
-            evaluate: ([a, b], loc) => {
+            evaluate: ({ values: [a, b], location }) => {
                 const value = Math.pow(a, b)
                 if (!Number.isFinite(value)) {
-                    throw Errors.LocationError(Errors.ERR_MATH, loc)
+                    throw Errors.LocationError(Errors.ERR_MATH, location)
                 }
                 return value
             },
@@ -29,29 +29,29 @@ export const Operators: readonly Operator[][] = [
     ],
     [
         {
-            symbol: "*",
+            name: "*",
             left: true,
             right: true,
-            evaluate: ([a, b]) => a * b,
+            evaluate: ({ values: [a, b] }) => a * b,
         },
         {
-            symbol: "/",
+            name: "/",
             left: true,
             right: true,
-            evaluate: ([a, b], loc) => {
+            evaluate: ({ values: [a, b], location }) => {
                 if (b === 0) {
-                    throw Errors.LocationError(Errors.ERR_DIVISION_BY_ZERO, loc)
+                    throw Errors.LocationError(Errors.ERR_DIVISION_BY_ZERO, location)
                 }
                 return a / b
             },
         },
         {
-            symbol: "%",
+            name: "%",
             left: true,
             right: true,
-            evaluate: ([a, b], loc) => {
+            evaluate: ({ values: [a, b], location }) => {
                 if (b === 0) {
-                    throw Errors.LocationError(Errors.ERR_DIVISION_BY_ZERO, loc)
+                    throw Errors.LocationError(Errors.ERR_DIVISION_BY_ZERO, location)
                 }
                 return a % b
             },
@@ -59,66 +59,66 @@ export const Operators: readonly Operator[][] = [
     ],
     [
         {
-            symbol: "+",
+            name: "+",
             left: true,
             addLeft: true,
             right: true,
             addRight: true,
-            evaluate: ([a, b]) => a + b,
+            evaluate: ({ values: [a, b] }) => a + b,
         },
         {
-            symbol: "-",
+            name: "-",
             left: true,
             addLeft: true,
             right: true,
             addRight: true,
-            evaluate: ([a, b]) => a - b,
+            evaluate: ({ values: [a, b] }) => a - b,
         },
     ],
     [
         {
-            symbol: "<",
+            name: "<",
             left: true,
             right: true,
-            evaluate: ([a, b]) => a < b ? 1 : 0,
+            evaluate: ({ values: [a, b] }) => a < b ? 1 : 0,
         },
         {
-            symbol: ">",
+            name: ">",
             left: true,
             right: true,
-            evaluate: ([a, b]) => a > b ? 1 : 0,
+            evaluate: ({ values: [a, b] }) => a > b ? 1 : 0,
         },
         {
-            symbol: "<=",
+            name: "<=",
             left: true,
             right: true,
-            evaluate: ([a, b]) => a <= b ? 1 : 0,
+            evaluate: ({ values: [a, b] }) => a <= b ? 1 : 0,
         },
         {
-            symbol: ">=",
+            name: ">=",
             left: true,
             right: true,
-            evaluate: ([a, b]) => a >= b ? 1 : 0,
+            evaluate: ({ values: [a, b] }) => a >= b ? 1 : 0,
         },
         {
-            symbol: "=",
+            name: "=",
             left: true,
             right: true,
-            evaluate: ([a, b]) => a === b ? 1 : 0,
+            evaluate: ({ values: [a, b] }) => a === b ? 1 : 0,
         },
     ],
     [
         {
-            symbol: "&&",
+            name: "&&",
             left: true,
             right: true,
-            evaluate: ([a, b]) => a && b ? 1 : 0,
+            evaluate: ({ values: [a, b] }) => a && b ? 1 : 0,
         },
         {
-            symbol: "||",
+            name: "||",
             left: true,
             right: true,
-            evaluate: ([a, b]) => a || b ? 1 : 0,
+            evaluate: ({ values: [a, b] }) => a || b ? 1 : 0,
         },
     ]
 
@@ -132,7 +132,7 @@ export const OperatorsMap = (() => {
     const map = new Map<string, Operator>()
     for (const operators of Operators) {
         for (const op of operators) {
-            map.set(op.symbol, op)
+            map.set(op.name, op)
         }
     }
     return map

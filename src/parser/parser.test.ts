@@ -8,7 +8,8 @@ test("expressions are parsed correctly", () => {
         },
         functions: {
             log: {
-                evaluate: ([x]) => 2 * x,
+                name: "log",
+                evaluate: ({values: [x]}) => 2 * x,
             }
         }
     })
