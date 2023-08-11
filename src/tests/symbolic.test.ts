@@ -1,6 +1,6 @@
 import { Parser } from "@src/parser"
 
-test("get a symbolic expression as argument without evaluating it", () => {
+test("set a variable using a symbolic expression", () => {
     const parser = new Parser({
         functions: {
             SET: {
