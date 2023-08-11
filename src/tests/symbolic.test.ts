@@ -1,4 +1,5 @@
 import { Parser } from "@src/parser"
+import { Node } from "@src/parser/node"
 
 test("set a variable using a symbolic expression", () => {
     const parser = new Parser({
@@ -47,7 +48,7 @@ test("use a symbolic expression to map a list", () => {
                 arguments: [
                     {
                         name: "expression",
-                        description: "The variable to set",
+                        description: "The mapping expression",
                         expression: true
                     }
                 ],
@@ -69,4 +70,76 @@ test("use a symbolic expression to map a list", () => {
     expect(expr.evaluate(0)).toBe(0)
     expect(list).toEqual([17, 28, 39])
 
+})
+
+
+test("use a symbolic expression to create a function", () => {
+    const functions = new Map<string, {
+        args: string[],
+        expr: Node
+    }>()
+    const parser = new Parser({
+        functions: {
+            FUNC: {
+                name: "FUNC",
+                arguments: [
+                    {
+                        name: "name",
+                        description: "The function name",
+                        expression: true
+                    },
+                    {
+                        name: "expression",
+                        description: "The function expression",
+                        expression: true
+                    }
+                ],
+                evaluate({ expressions: [nameExpr, fnExpr] }) {
+                    const name = nameExpr.token.value
+
+                    const args = fnExpr.children[0].children.map(arg => arg.token.value)
+                    const expr = fnExpr.children[1]
+
+                    functions.set(name, { args, expr })
+
+                    return 0
+                }
+            },
+            CALL: {
+                name: "CALL",
+                arguments: [
+                    {
+                        name: "name",
+                        description: "The function name",
+                        expression: true
+                    },
+                    "..."
+                ],
+                evaluate({ values: [, ...args], expressions: [nameExpr] }) {
+                    const name = nameExpr.token.value
+                    const fn = functions.get(name)
+                    if (!fn) {
+                        throw new Error(`Function ${name} not found`)
+                    }
+                    const { args: fnArgs, expr } = fn
+                    if (args.length !== fnArgs.length) {
+                        throw new Error(`Function ${name} expects ${fnArgs.length} arguments, got ${args.length}`)
+                    }
+                    args.forEach((arg, i) => {
+                        parser.setVar(fnArgs[i], arg)
+                    })
+                    return expr.evaluate!()
+                }
+            }
+        }
+    })
+    const expr = parser.parse(`
+        FUNC(myCustomFunction, (
+            (x, y), x*y + 1
+        )),
+        CALL(myCustomFunction, 2, 3)
+    `)
+
+    expr.evaluate(0)
+    expect(expr.evaluate(1)).toBe(2 * 3 + 1)
 })
