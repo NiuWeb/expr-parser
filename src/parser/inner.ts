@@ -48,7 +48,7 @@ export function clearList(nodes: Node[]): void {
         return
     }
     if (isComma(nodes[0])) {
-        throw Errors.LocationError(Errors.ERR_LIST_COMMA, nodes[0].token.location.start)
+        throw Errors.LocationError(Errors.ERR_LIST_UNEXPECTED_COMMA, nodes[0].token.location.start)
     }
 
     let lastWasComma = false
@@ -57,7 +57,7 @@ export function clearList(nodes: Node[]): void {
     for (let i = 1; i < nodes.length; i++) {
         const thisIsComma = isComma(nodes[i])
         if (lastWasComma === thisIsComma) {
-            throw Errors.LocationError(Errors.ERR_LIST_COMMA, nodes[i].token.location.start)
+            throw Errors.LocationError(Errors.ERR_LIST_EXPECTED_COMMA, nodes[i].token.location.start)
         }
         lastWasComma = thisIsComma
     }
