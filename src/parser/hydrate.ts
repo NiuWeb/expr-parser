@@ -25,7 +25,7 @@ export function hydrateNode(node: Node, ctx?: Context): void {
             return
         }
 
-        let fn: Fn
+        let fn: Fn | undefined
 
         if (node.token.type === TokenType.OPERATOR) { // operator function
             fn = OperatorsMap.get(node.token.value)!
@@ -34,8 +34,7 @@ export function hydrateNode(node: Node, ctx?: Context): void {
                 throw Errors.LocationError(Errors.ERR_FUNCTION_CONTEXT, node.token.location.start)
             }
             // get the function body
-            const name = node.token.value.toLowerCase()
-            fn = ctx.functions[name]
+            fn = ctx.getFn(node.token.value)
         }
 
         if (!fn) {
@@ -63,7 +62,7 @@ export function hydrateNode(node: Node, ctx?: Context): void {
         const expressions = node.children
         node.evaluate = () => {
             const values = node.children.map((child, i) => {
-                const arg = fn.arguments?.[i]
+                const arg = fn!.arguments?.[i]
                 if (arg && typeof arg !== "string" && arg.expression) {
                     return 0
                 }
@@ -72,7 +71,7 @@ export function hydrateNode(node: Node, ctx?: Context): void {
                 }
                 return child.evaluate()
             })
-            return fn.evaluate({ values, expressions, location })
+            return fn!.evaluate({ values, expressions, location })
         }
     }
 
@@ -81,7 +80,7 @@ export function hydrateNode(node: Node, ctx?: Context): void {
             if (!ctx) {
                 throw Errors.LocationError(Errors.ERR_VARIABLE_CONTEXT, node.token.location.start)
             }
-            const value = ctx.variables[node.token.value.toLowerCase()]
+            const value = ctx.getVar(node.token.value)
             if (value === undefined) {
                 throw Errors.LocationError(Errors.ERR_VARIABLE_UNKNOWN(node.token.value), node.token.location.start)
             }

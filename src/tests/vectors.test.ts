@@ -9,16 +9,16 @@ test("vector operations with functions", () => {
             pi: Math.PI,
         },
         functions: {
-            vector: {
-                name: "vector",
+            VECTOR: {
+                name: "VECTOR",
                 evaluate({ values }) {
                     const id = vectId++
                     vectors.set(id, values)
                     return id
                 }
             },
-            scalar: {
-                name: "scalar",
+            SCALAR: {
+                name: "SCALAR",
                 arguments: [
                     {
                         name: "scalar",
@@ -38,8 +38,8 @@ test("vector operations with functions", () => {
                     return V
                 }
             },
-            dot: {
-                name: "dot",
+            DOT: {
+                name: "DOT",
                 arguments: [
                     {
                         name: "vectorA",
@@ -70,8 +70,8 @@ test("vector operations with functions", () => {
                     return sum
                 }
             },
-            lookto: {
-                name: "lookto",
+            LOOKTO: {
+                name: "LOOKTO",
                 arguments: [
                     {
                         name: "distance",
@@ -90,8 +90,8 @@ test("vector operations with functions", () => {
                     return id
                 }
             },
-            degtorad: {
-                name: "degtorad",
+            DEGTORAD: {
+                name: "DEGTORAD",
                 arguments: [
                     {
                         name: "deg",

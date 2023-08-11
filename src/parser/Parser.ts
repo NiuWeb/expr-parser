@@ -25,14 +25,14 @@ export class Parser {
      * @param value The value of the variable
      */
     public setVar(name: string, value: number) {
-        this.context.variables[name] = value
+        this.context.setVar(name, value)
     }
 
     /**
      * Gets a variable from the parser's context
      */
     public getVar(name: string) {
-        return this.context.variables[name]
+        return this.context.getVar(name)
     }
 
     /**

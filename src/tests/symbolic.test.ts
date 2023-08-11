@@ -3,8 +3,8 @@ import { Parser } from "@src/parser"
 test("get a symbolic expression as argument without evaluating it", () => {
     const parser = new Parser({
         functions: {
-            set: {
-                name: "set",
+            SET: {
+                name: "SET",
                 arguments: [
                     {
                         name: "variable",
@@ -26,12 +26,12 @@ test("get a symbolic expression as argument without evaluating it", () => {
         }
     })
     const expr = parser.parse(`
-        SET(mycustomvariable, 33.33),
+        SET(myCustomVariable, 33.33),
         myCustomVariable + 10
     `)
 
     expect(expr.evaluate(0)).toBeCloseTo(33.33)
     expect(expr.evaluate(1)).toBeCloseTo(43.33)
-    expect(parser.getVar("mycustomvariable")).toBeCloseTo(33.33)
+    expect(parser.getVar("myCustomVariable")).toBeCloseTo(33.33)
 
 })
