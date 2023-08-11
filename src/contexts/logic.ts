@@ -63,6 +63,28 @@ export const ctxLogic: ContextOptions = {
             evaluate({ values: [value] }) {
                 return value > 0 ? 0 : 1
             }
+        },
+        switch: {
+            name: "switch",
+            description: "Switch statement. Returns the value of the first 'case' whose 'condition' is true, otherwise returns 'default'. " +
+                "The syntax is `switch(value, case1, result1, case2, result2, ..., [default])`. Note that if there are an even number of " +
+                "arguments, the last argument is used as the default value. If no default provided, defaults to 0.",
+            arguments: [
+                {
+                    name: "value",
+                    description: "The value to compare against the 'case' values"
+                },
+                "..."
+            ],
+            evaluate({ values: [value, ...values] }) {
+                const defaultValue = values.length % 2 === 1 ? values.pop()! : 0
+                for (let i = 0; i < values.length; i += 2) {
+                    if (value === values[i]) {
+                        return values[i + 1]
+                    }
+                }
+                return defaultValue
+            }
         }
     }
 }
