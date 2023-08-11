@@ -65,7 +65,7 @@ export function hydrateNode(node: Node, ctx?: Context): void {
             const values = node.children.map((child, i) => {
                 const arg = fn.arguments?.[i]
                 if (arg && typeof arg !== "string" && arg.expression) {
-                    return child.evaluate?.() || 0
+                    return 0
                 }
                 if (!child.evaluate) {
                     throw Errors.LocationError(Errors.ERR_FUNCTION_ARGUMENT, child.token.location.start)
