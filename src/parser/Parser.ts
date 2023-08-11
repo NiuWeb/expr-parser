@@ -5,11 +5,18 @@ import { wrapTokens } from "./wrap"
 import { clearList, groupOperators, unwrapSingle } from "./inner"
 import { hydrateNode } from "./hydrate"
 import { Expression } from "./Expression"
+import { Contexts } from "@src/contexts/contexts"
 /**
  * An expression parser transform mathematical expressions from
  * strings into a tree of nodes that can be evaluated.
  */
 export class Parser {
+    /**
+     * generates default contexts
+     */
+    public static readonly Contexts = Contexts
+
+    
     private context: Context
     /**
      * Creates a new expression parser

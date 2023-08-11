@@ -30,6 +30,7 @@ export interface FnInput {
  */
 export interface Fn {
     name: string
+    description?: string
     /**
      * Arguments definition for the function.
      */
