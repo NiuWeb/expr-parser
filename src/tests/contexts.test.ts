@@ -29,9 +29,19 @@ test("default contexts", () => {
             300,
             -1   
         ),
+        SWITCH(TRUE,
+            1 + 1 = 3,
+            100,
+            2/2 = 1,
+            200,
+            3/3 > 1,
+            300,
+            -1
+        )
     `)
 
     expect(expr.evaluate(0)).toBe(1000)
     expect(expr.evaluate(1)).toBe(300)
     expect(expr.evaluate(2)).toBe(-1)
+    expect(expr.evaluate(3)).toBe(200)
 })
