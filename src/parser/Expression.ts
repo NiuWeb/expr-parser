@@ -16,6 +16,13 @@ export class Expression {
     }
 
     /**
+     * Gets the node at the given index
+     */
+    public node(i: number): Node {
+        return this.nodes[i]
+    }
+
+    /**
      * Gets the start location of the expression node at the given index
      */
     public location(i: number): Location {
