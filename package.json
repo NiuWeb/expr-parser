@@ -1,6 +1,6 @@
 {
   "name": "@bygdle/expr-parser",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "type": "module",
   "source": "src/index.ts",
   "main": "lib/index.js",
