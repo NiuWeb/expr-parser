@@ -1,8 +1,7 @@
 import * as monaco from "monaco-editor"
-import { functions as getFunctions } from "../../parser/functions"
 import { ParserContext } from "../../parser/context"
 
-const functions = Object.keys(getFunctions(new ParserContext()))
+const functions = Object.keys((new ParserContext()).parser.context.functions || {})
 
 monaco.languages.register({ id: "expr-parser" })
 monaco.languages.setMonarchTokensProvider("expr-parser", {

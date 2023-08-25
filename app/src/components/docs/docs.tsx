@@ -16,7 +16,7 @@ export function Docs() {
             {name}
           </div>
           <div className="args inline-block text-red-800">
-            ({t.argNames.join(", ")})
+            ({t.arguments?.join(", ")})
           </div>
         </div>
       ))}

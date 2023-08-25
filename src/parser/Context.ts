@@ -25,26 +25,33 @@ export interface ContextOptions {
  */
 export class Context {
     private readonly ignoreCase: boolean
-    private readonly functions: FnMap
-    private readonly variables: VarMap
+    private readonly _functions: FnMap
+    private readonly _variables: VarMap
     constructor(props: ContextOptions) {
-        this.functions = props.functions || {}
-        this.variables = props.variables || {}
+        this._functions = props.functions || {}
+        this._variables = props.variables || {}
         this.ignoreCase = props.ignoreCase || false
 
         if (this.ignoreCase) {
             const functions: FnMap = {}
-            for (const name in this.functions) {
-                functions[name.toLowerCase()] = this.functions[name]
+            for (const name in this._functions) {
+                functions[name.toLowerCase()] = this._functions[name]
             }
-            this.functions = functions
+            this._functions = functions
 
             const variables: VarMap = {}
-            for (const name in this.variables) {
-                variables[name.toLowerCase()] = this.variables[name]
+            for (const name in this._variables) {
+                variables[name.toLowerCase()] = this._variables[name]
             }
-            this.variables = variables
+            this._variables = variables
         }
+    }
+
+    public get functions(): Readonly<FnMap> {
+        return this._functions
+    }
+    public get variables(): Readonly<VarMap> {
+        return this._variables
     }
 
 
@@ -55,7 +62,7 @@ export class Context {
         if (this.ignoreCase) {
             name = name.toLowerCase()
         }
-        return this.functions[name]
+        return this._functions[name]
     }
 
     /**
@@ -65,7 +72,7 @@ export class Context {
         if (this.ignoreCase) {
             name = name.toLowerCase()
         }
-        return this.variables[name]
+        return this._variables[name]
     }
 
     /**
@@ -75,6 +82,6 @@ export class Context {
         if (this.ignoreCase) {
             name = name.toLowerCase()
         }
-        this.variables[name] = value
+        this._variables[name] = value
     }
 }

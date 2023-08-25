@@ -16,8 +16,8 @@ export class Parser {
      */
     public static readonly Contexts = Contexts
 
-    
-    private context: Context
+
+    public readonly context: Context
     /**
      * Creates a new expression parser
      * @param options The options for the parser, such as functions and variables
