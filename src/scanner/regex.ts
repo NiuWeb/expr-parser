@@ -22,7 +22,8 @@ export const TokenRegex: readonly TokenExpr[] = [
     // numeric part of a word is not mistaken for a number.
     // Example: `a1` is only one word token, not a word `a`
     // followed by a number `1`.
-    [TokenType.WORD, /[a-z_](?:[a-z0-9_]*(?:\.[a-z0-9_]+)?)*/ig],
+    // Symbol $ is also allowed in words at any position.
+    [TokenType.WORD, /[a-z$_](?:[a-z0-9$_]*(?:\.[a-z0-9$_]+)?)*/ig],
 
     // Standard decimal numbers
     [TokenType.NUMBER, /[0-9]+(?:\.[0-9]+)?/ig],
