@@ -6,7 +6,7 @@
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "scripts": {
-    "prepare": "npm run build",
+    "prepare": "npx ts-patch install && npm run build",
     "build": "lib-build -e src/index.ts -o lib -t tsconfig.json",
     "dev": "lib-build -e src/index.ts -o lib -t tsconfig.json -w true",
     "test": "jest"
