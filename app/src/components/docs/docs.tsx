@@ -1,5 +1,6 @@
 import { useMemo } from "react"
 import { useApp } from "../../app/context"
+import { FnArgument } from "@bygdle/expr-parser/lib/functions/functions"
 
 export function Docs() {
   const { parser } = useApp()
@@ -16,10 +17,27 @@ export function Docs() {
             {name}
           </div>
           <div className="args inline-block text-red-800">
-            ({t.arguments?.join(", ")})
+            (
+          </div>
+          {t.arguments?.map((arg, i) => (
+            <>
+              <Arg key={i} arg={arg} />
+              {t.arguments && i < t.arguments.length - 1 && ", "}
+            </>
+          ))}
+          <div className="args inline-block text-red-800">
+            )
           </div>
         </div>
       ))}
     </div>
   </div>
+}
+
+function Arg({ arg }: { arg: FnArgument | "..." }) {
+  if (arg === "...") {
+    return <span className="text-gray-600">...</span>
+  }
+
+  return <span className="text-blue-600">{arg.name}</span>
 }
