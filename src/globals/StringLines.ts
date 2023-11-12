@@ -64,6 +64,14 @@ export class StringLines {
     }
 
     /**
+     * Gets the number of columns in a given line.
+     */
+    public getLineLength(line: number): number {
+        const range = this.getLineRange(line)
+        return range[1] - range[0]
+    }
+
+    /**
      * Gets the number of lines in the input string.
      */
     public get lines() {

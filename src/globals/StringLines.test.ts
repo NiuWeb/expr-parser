@@ -6,6 +6,15 @@ const create = () => new StringLines(
 )
 
 describe("test class StringLines", () => {
+
+    test("get line length", () => {
+        const lines = create()
+
+        expect(lines.lines).toBe(2)
+        expect(lines.getLineLength(1)).toBe(14)
+        expect(lines.getLineLength(2)).toBe(15)
+    })
+
     test("get location from index", () => {
         const lines = create()
 
