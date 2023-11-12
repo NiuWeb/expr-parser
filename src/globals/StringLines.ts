@@ -64,6 +64,13 @@ export class StringLines {
     }
 
     /**
+     * Gets the number of lines in the input string.
+     */
+    public get lines() {
+        return this.ranges.length
+    }
+
+    /**
      * Changes the input string and parses it.
      */
     public update(input: string) {
