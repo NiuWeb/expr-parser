@@ -16,8 +16,12 @@ export type Contexts = keyof typeof contexts
 /**
  * Joins multiple default contexts into a single context.
  */
-export function Contexts(...names: Contexts[]): ContextOptions {
-    return mixContexts(names.map(name => contexts[name]))
+export function Contexts(...names: (Contexts | ContextOptions)[]): ContextOptions {
+    return mixContexts(names.map(name => (
+        typeof name === "string"
+            ? contexts[name]
+            : name
+    )))
 }
 
 function wrapContext<Keys extends string>(obj: { [k in Keys]: ContextOptions }) {
