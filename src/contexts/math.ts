@@ -135,10 +135,7 @@ export const ctxMath: ContextOptions = {
             name: "min",
             description: "Find the minimum value from a list of numbers.",
             arguments: [
-                {
-                    name: "values",
-                    description: "An array of values to find the minimum of"
-                }
+                "..."
             ],
             evaluate({ values }) {
                 return Math.min(...values)
@@ -148,10 +145,7 @@ export const ctxMath: ContextOptions = {
             name: "max",
             description: "Find the maximum value from a list of numbers.",
             arguments: [
-                {
-                    name: "values",
-                    description: "An array of values to find the maximum of"
-                }
+                "..."
             ],
             evaluate({ values }) {
                 return Math.max(...values)
