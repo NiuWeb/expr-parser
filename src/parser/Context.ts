@@ -25,8 +25,8 @@ export interface ContextOptions {
  */
 export class Context {
     private readonly ignoreCase: boolean
-    private functions: FnMap
-    private variables: VarMap
+    public functions: FnMap
+    public variables: VarMap
     constructor(props: ContextOptions) {
         this.functions = props.functions || {}
         this.variables = props.variables || {}
