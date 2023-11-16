@@ -25,35 +25,27 @@ export interface ContextOptions {
  */
 export class Context {
     private readonly ignoreCase: boolean
-    private readonly _functions: FnMap
-    private readonly _variables: VarMap
+    private functions: FnMap
+    private variables: VarMap
     constructor(props: ContextOptions) {
-        this._functions = props.functions || {}
-        this._variables = props.variables || {}
+        this.functions = props.functions || {}
+        this.variables = props.variables || {}
         this.ignoreCase = props.ignoreCase || false
 
         if (this.ignoreCase) {
             const functions: FnMap = {}
-            for (const name in this._functions) {
-                functions[name.toLowerCase()] = this._functions[name]
+            for (const name in this.functions) {
+                functions[name.toLowerCase()] = this.functions[name]
             }
-            this._functions = functions
+            this.functions = functions
 
             const variables: VarMap = {}
-            for (const name in this._variables) {
-                variables[name.toLowerCase()] = this._variables[name]
+            for (const name in this.variables) {
+                variables[name.toLowerCase()] = this.variables[name]
             }
-            this._variables = variables
+            this.variables = variables
         }
     }
-
-    public get functions(): Readonly<FnMap> {
-        return this._functions
-    }
-    public get variables(): Readonly<VarMap> {
-        return this._variables
-    }
-
 
     /**
      * Gets a function from the context by name.
@@ -62,7 +54,7 @@ export class Context {
         if (this.ignoreCase) {
             name = name.toLowerCase()
         }
-        return this._functions[name]
+        return this.functions[name]
     }
 
     /**
@@ -72,7 +64,7 @@ export class Context {
         if (this.ignoreCase) {
             name = name.toLowerCase()
         }
-        return this._variables[name]
+        return this.variables[name]
     }
 
     /**
@@ -82,6 +74,6 @@ export class Context {
         if (this.ignoreCase) {
             name = name.toLowerCase()
         }
-        this._variables[name] = value
+        this.variables[name] = value
     }
 }
