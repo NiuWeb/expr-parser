@@ -77,18 +77,6 @@ export const Operators: readonly Operator[][] = [
     ],
     [
         {
-            name: "<",
-            left: true,
-            right: true,
-            evaluate: ({ values: [a, b] }) => a < b ? 1 : 0,
-        },
-        {
-            name: ">",
-            left: true,
-            right: true,
-            evaluate: ({ values: [a, b] }) => a > b ? 1 : 0,
-        },
-        {
             name: "<=",
             left: true,
             right: true,
@@ -99,6 +87,18 @@ export const Operators: readonly Operator[][] = [
             left: true,
             right: true,
             evaluate: ({ values: [a, b] }) => a >= b ? 1 : 0,
+        },
+        {
+            name: "<",
+            left: true,
+            right: true,
+            evaluate: ({ values: [a, b] }) => a < b ? 1 : 0,
+        },
+        {
+            name: ">",
+            left: true,
+            right: true,
+            evaluate: ({ values: [a, b] }) => a > b ? 1 : 0,
         },
         {
             name: "=",
