@@ -16,15 +16,17 @@ export const ctxLogic: ContextOptions = {
                 },
                 {
                     name: "valueIfTrue",
-                    description: "The value to return if 'condition' is true"
+                    description: "The value to return if 'condition' is true",
+                    expression: true
                 },
                 {
                     name: "valueIfFalse",
-                    description: "The value to return if 'condition' is false"
+                    description: "The value to return if 'condition' is false",
+                    expression: true
                 }
             ],
-            evaluate({ values: [condition, valueIfTrue, valueIfFalse] }) {
-                return condition > 0 ? valueIfTrue : valueIfFalse
+            evaluate({ values: [condition], expressions: [, valueIfTrue, valueIfFalse] }) {
+                return condition > 0 ? valueIfTrue.evaluate?.() || 0 : valueIfFalse?.evaluate?.() || 0
             }
         },
         and: {
