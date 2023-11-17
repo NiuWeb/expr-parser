@@ -16,3 +16,10 @@ test("logical operation", () => {
 
     expect(expr.evaluate(0)).toBe(1)
 })
+
+test("logical operation", () => {
+    const parser = new Parser()
+    const expr = parser.parse("2 >= 1")
+
+    expect(expr.evaluate(0)).toBe(1)
+})
