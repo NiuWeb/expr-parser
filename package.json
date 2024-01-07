@@ -3,16 +3,19 @@
   "version": "0.9.6",
   "type": "module",
   "source": "src/index.ts",
-  "main": "lib/index.js",
-  "types": "lib/index.d.ts",
+  "main": "lib",
+  "exports": {
+    "import": "./lib/index.js",
+    "require": "./lib/index.cjs"
+  },
   "scripts": {
     "prepare": "npx ts-patch install && npm run build",
-    "build": "lib-build -e src/index.ts -o lib -t tsconfig.json",
+    "build": "lib-build -e src/index.ts -o lib -t tsconfig.json -cjs 1",
     "dev": "lib-build -e src/index.ts -o lib -t tsconfig.json -w true",
     "test": "jest"
   },
   "devDependencies": {
-    "@bygdle/lib-build": "^0.0.6",
+    "@bygdle/lib-build": "^0.1.2",
     "@types/jest": "^29.5.3",
     "@typescript-eslint/eslint-plugin": "^6.2.1",
     "@typescript-eslint/parser": "^6.2.1",
